@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Open Deep Link</title>
+</head>
+<body>
+  <script>
+    var isAndroid = navigator.userAgent.match(/Android/i);
+    function redirectToAppStore() {
+      
+      // Check if the user agent contains "Android" or "Linux" to detect Android devices
+      if (isAndroid) {
+        window.location.href = 'https://play.google.com/store/apps/details?id=com.blessings.app';
+      } else {
+        // Redirect to the App Store for iOS devices
+        window.location.href = 'https://itunes.apple.com/app/6445897442';
+      }
+    }
+
+    function openApp() {
+      window.location.href = 'com.blessings.app://';
+
+      // If the app doesn't open, redirect to the app store after a delay
+      setTimeout(redirectToAppStore, isAndroid?  5000 : 1000); // Adjust the delay as needed
+    }
+
+    openApp();
+
+  </script>
+</body>
+</html>
