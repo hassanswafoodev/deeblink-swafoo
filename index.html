@@ -1,31 +1,133 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Open Deep Link</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Deep Link</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        .app-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 500px;
+            background-color: #fff;
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: absolute;
+            top: 0;
+        }
+
+        .app-header img {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+        }
+
+        .app-header .app-title {
+            flex-grow: 1;
+            margin-left: 10px;
+        }
+
+        .app-header .open-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .content {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .download-button {
+            background-color: #00b0d7;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 20px;
+            display: inline-block;
+        }
+
+        .download-button:hover {
+            background-color: #009fbe;
+        }
+
+        .note {
+            margin-top: 20px;
+            color: #888;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
-  <script>
-    var isAndroid = navigator.userAgent.match(/Android/i);
-    function redirectToAppStore() {
-      
-      // Check if the user agent contains "Android" or "Linux" to detect Android devices
-      if (isAndroid) {
-        window.location.href = 'https://play.google.com/store/apps/details?id=com.blessings.app';
-      } else {
-        // Redirect to the App Store for iOS devices
-        window.location.href = 'https://itunes.apple.com/app/6445897442';
-      }
-    }
+    <div class="app-header">
+        <img src="./logo_with_svg.png" alt="App Logo">
+        <div class="app-title">
+            <h2>Blessings</h2>
+            <p>Open in the Blessings app</p>
+        </div>
+        <button class="open-button" onclick="openApp()">Open</button>
+    </div>
 
-    function openApp() {
-      window.location.href = 'com.blessings.app://';
+    <div class="content">
+        <button class="download-button" onclick="redirectToAppStore()">Download App</button>
+        <p class="note">Please press the button to proceed to your app</p>
+    </div>
 
-      // If the app doesn't open, redirect to the app store after a delay
-      setTimeout(redirectToAppStore, isAndroid?  5000 : 1000); // Adjust the delay as needed
-    }
+    <script>
+        // Function to get URL parameters
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                id: params.get('id'), // Extract the 'id' parameter from the URL
+                path: window.location.pathname // Extract the path (e.g., "/masjed")
+            };
+        }
 
-    openApp();
+        var isAndroid = navigator.userAgent.match(/Android/i);
 
-  </script>
+        function redirectToAppStore() {
+            if (isAndroid) {
+                window.location.href = 'https://play.google.com/store/apps/details?id=com.blessings.app';
+            } else {
+                window.location.href = 'https://itunes.apple.com/app/6445897442';
+            }
+        }
+
+        function openApp() {
+            const queryParams = getQueryParams();
+            const deepLink = `com.blessings.app://blessings.com${queryParams.path}?id=${queryParams.id}`;
+
+            // Attempt to open the app using the deep link
+            window.location.href = deepLink;
+
+            // If the app doesn't open, redirect to the app store after a delay
+            setTimeout(redirectToAppStore, isAndroid ? 5000 : 1000);
+        }
+    </script>
 </body>
 </html>
