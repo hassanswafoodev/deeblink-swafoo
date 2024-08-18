@@ -111,7 +111,7 @@
             const params = new URLSearchParams(window.location.search);
             return {
                 id: params.get('id'), // Extract the 'id' parameter from the URL
-                path: window.location.pathname // Extract the path (e.g., "/masjed")
+                path:params.get('path'), // Extract the path (e.g., "/masjed")
             };
         }
 
