@@ -127,7 +127,7 @@
 
         function openApp() {
             const queryParams = getQueryParams();
-            const deepLink = `com.blessings.app://blessings.com${queryParams.path}?id=${queryParams.id}`;
+            const deepLink = `com.blessings.app://blessings.com/${queryParams.path}?id=${queryParams.id}`;
 
             // Attempt to open the app using the deep link
             window.location.href = deepLink;
